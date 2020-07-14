@@ -2,28 +2,25 @@
 
 include 'Emailer.php';
 
-$email = $_POST['email'];
-$firstname = $_POST['firstname'];
+// public function processForm
+    // validate form
+    // return array
+
+$emailAddress = $_POST['email'];
+$firstName = $_POST['firstName'];
+
+// public function composeEmail
 
 $to = "dortwag@gmail.com";
-$headers = ['From' => $email, 
-            'Reply-To' => $email, 
-            'Content-type' => 'text/html; charset=iso-8859-1',
-        ];
+
 
 $subject = "this is the subject";
 
-// the message
-$msg = $firstname . " would like to know more about ADT Security, please get in contact with them. " . $email;
-
-// use wordwrap() if lines are longer than 70 characters
-$msg = wordwrap($msg,70);
-
 $emailer = new Emailer;
-
+$email = $emailer->composeEmail($to, $subject, $emailAddress, $firstName);
 
 // send email
-if($emailer->send($to, $subject, $msg, $headers)) {
+if($emailer->send($email)) {
     echo('true');
 } else {
     echo('false');
