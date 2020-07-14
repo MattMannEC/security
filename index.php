@@ -12,21 +12,23 @@
 
 include 'DefaultController.php';
 
-    $defaultController = new DefaultController;
+    if (!empty($_POST)) {
+        $defaultController = new DefaultController;
 
-    if ($defaultController->validateForm()) {
-        $email = $defaultController->processForm();
-        $emailer = new Emailer;
-        $email = $emailer->compose($email);
-        
-        // send email
-        if($emailer->send($email)) {
-            echo($defaultController->message);
+        if ($defaultController->validateForm()) {
+            $email = $defaultController->processForm();
+            $emailer = new Emailer;
+            $email = $emailer->compose($email);
+            
+            // send email
+            if($emailer->send($email)) {
+                echo($defaultController->message);
+            } else {
+                echo($defaultController->message);
+            };
         } else {
             echo($defaultController->message);
-        };
-    } else {
-        echo($defaultController->message);
+        }
     }
 ?>
 
