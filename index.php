@@ -7,9 +7,34 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Document</title>
 </head>
+
+<?php
+
+include 'DefaultController.php';
+
+    $defaultController = new DefaultController;
+
+    if ($defaultController->validateForm()) {
+        $email = $defaultController->processForm();
+        $emailer = new Emailer;
+        $email = $emailer->compose($email);
+        
+        // send email
+        if($emailer->send($email)) {
+            echo($defaultController->message);
+        } else {
+            echo($defaultController->message);
+        };
+    } else {
+        echo($defaultController->message);
+    }
+?>
+
 <body>
+
+
     <div class='container'>
-        <form action="mail.php" method="post">
+        <form action="index.php" method="post">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Enter email">
