@@ -7,7 +7,7 @@ Class Emailer
     
     public function compose($email)
     {
-        $message = $email['firstName'] . " would like to know more about ADT Security, 
+        $message = $email['firstName'] . ' ' . $email['lastName'] . " would like to know more about ADT Security, 
                                 please get in contact with them. " . $email['emailAddress'];
 
         // use wordwrap() if lines are longer than 70 characters

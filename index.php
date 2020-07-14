@@ -10,26 +10,21 @@
 
 <?php
 
-include 'DefaultController.php';
+include 'FormController.php';
 
-    if (!empty($_POST)) {
-        $defaultController = new DefaultController;
-
-        if ($defaultController->validateForm()) {
-            $email = $defaultController->processForm();
-            $emailer = new Emailer;
-            $email = $emailer->compose($email);
-            
-            // send email
-            if($emailer->send($email)) {
-                echo($defaultController->message);
-            } else {
-                echo($defaultController->message);
-            };
-        } else {
-            echo($defaultController->message);
+if (!empty($_POST)) {
+    $formController = new FormController;
+    $formController->validateForm();
+    if (empty($formController->errors)) {
+        $email = $formController->processForm();
+        $emailer = new Emailer;
+        $email = $emailer->compose($email);
+        if ($email) {
+            $emailer->send($email);
+            header('Location: http://localhost/adt/index.php');
         }
     }
+}
 ?>
 
 <body>
@@ -38,13 +33,18 @@ include 'DefaultController.php';
     <div class='container'>
         <form action="index.php" method="post">
             <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <label for="exampleInputEmail1">Email address <?= (isset($formController->errors['email'])) ? ' ' . $formController->errors['email'] : ''?></label>
+                <input type="email" class="form-control" id="exampleInputEmail1" name="email" value="<?= (isset($_POST['email'])) ? $_POST['email'] : '' ?>" aria-describedby="emailHelp" placeholder="Enter email" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">First Name</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" name="firstName" placeholder="First Name">
+                <label for="exampleInputPassword1">First Name <?= (isset($formController->errors['firstName'])) ? ' ' . $formController->errors['firstName'] : ''?></label>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="firstName" value="<?= (isset($_POST['firstName'])) ? $_POST['firstName'] : '' ?>"placeholder="First Name" required>
             </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Last Name <?= (isset($formController->errors['lastName'])) ? ' ' . $formController->errors['lastName'] : ''?></label>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="lastName" value="<?= (isset($_POST['lastName'])) ? $_POST['lastName'] : '' ?>"placeholder="Last Name" required>
+            </div>
+            
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
