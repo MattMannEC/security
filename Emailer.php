@@ -2,23 +2,26 @@
 
 Class Emailer
 {
-    public function composeEmail($to, $subject, $emailAddress, $firstName)
+    public $to = "dortwag@gmail.com";
+    public $subject = "this is the subject";
+    
+    public function compose($email)
     {
-        $message = $firstName . " would like to know more about ADT Security, 
-                                please get in contact with them. " . $emailAddress;
-                                
+        $message = $email['firstName'] . " would like to know more about ADT Security, 
+                                please get in contact with them. " . $email['emailAddress'];
+
         // use wordwrap() if lines are longer than 70 characters
         $message = wordwrap($message,70);
 
         $headers = [
-            'From' => $emailAddress, 
-            'Reply-To' => $emailAddress, 
+            'From' => $email['emailAddress'], 
+            'Reply-To' => $email['emailAddress'], 
             'Content-type' => 'text/html; charset=iso-8859-1',
         ];
 
         $email = [
-            'to' => $to,
-            'subject' => $subject,
+            'to' => $this->to,
+            'subject' => $this->subject,
             'message' => $message,
             'headers' => $headers,
         ];

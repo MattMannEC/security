@@ -1,23 +1,34 @@
 <?php
-
 include 'Emailer.php';
 
-// public function processForm
-    // validate form
-    // return array
+// Class DefaultController
+// {
+//     public function processForm()
+//     {
+//         if ($this->validateForm()) {
 
-$emailAddress = $_POST['email'];
-$firstName = $_POST['firstName'];
+//         }
+//         return $email;
+
+//     }
+
+//     public function validateForm()
+//     {
+//         return true;
+//     }
+
+// }
+
+
+$email['emailAddress'] = $_POST['email'];
+$email['firstName'] = $_POST['firstName'];
 
 // public function composeEmail
 
-$to = "dortwag@gmail.com";
 
-
-$subject = "this is the subject";
 
 $emailer = new Emailer;
-$email = $emailer->composeEmail($to, $subject, $emailAddress, $firstName);
+$email = $emailer->compose($email);
 
 // send email
 if($emailer->send($email)) {
