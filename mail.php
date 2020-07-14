@@ -14,7 +14,7 @@ $headers = ['From' => $email,
 $subject = "this is the subject";
 
 // the message
-$msg = $firstname . "would like to know more about ADT Security, please get in contact with them. " . $email;
+$msg = $firstname . " would like to know more about ADT Security, please get in contact with them. " . $email;
 
 // use wordwrap() if lines are longer than 70 characters
 $msg = wordwrap($msg,70);
